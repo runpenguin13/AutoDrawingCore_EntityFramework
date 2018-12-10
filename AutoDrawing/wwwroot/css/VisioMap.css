@@ -1,0 +1,108 @@
+﻿
+/* #region List */
+#List .C {
+    background-color: darkseagreen;
+    border-radius: 10px;
+    padding: 3px 7px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1;
+}
+
+#List .I {
+    background-color: cornflowerblue;
+    border-radius: 10px;
+    padding: 3px 7px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1;
+}
+
+#List .P {
+    background-color: coral;
+    border-radius: 10px;
+    padding: 3px 7px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1;
+}
+/* #endregion List */
+
+
+/* Filter Group */
+#FilterGroup .input-group-prepend span {
+    min-width: 7rem;
+}
+
+/* Create Modal */
+#FormCreate .input-group-prepend span {
+    min-width: 5rem;
+}
+
+/* Edit Modal */
+#FormEdit .input-group-prepend span {
+    min-width: 7rem;
+}
+td.Component .btn {
+    max-width: 10rem;
+    overflow-x: hidden;
+}
+
+/* Common */
+button.btn-Remove-Relation {
+    border-radius: 1rem;
+    padding: 0 6px 0 6px;
+}
+
+button.btn-Remove-Relation .fa {
+    font-size: 0.5rem;
+}
+
+button.btnRemoveShape, button.btnRemReShape {
+    padding: 2px 7px 2px 7px;
+    border-radius: 1rem;
+    margin: auto;
+    margin-right: 1rem;
+}
+
+button.btnRemoveShape i, button.btnRemReShape i {
+    font-size: 9px;
+}
+
+input[name="Method"], input[name="Value"], input[name="LayerVal"]{
+    max-width: 5rem;
+}
+
+.RelationRow button.custom-dropdown-toggle {
+    max-width: 10rem;
+}
+
+
+/* #region form */
+.select {
+    background-color: lightgray;
+    border-radius: 5px;
+}
+
+select.form-control {
+    font-size: 0.8rem;
+}
+/* #endregion form */
+
+
+/* #region table */
+table.table th {
+    font-size: .9rem;
+}
+
+table.table tbody span {
+    font-size: 0.8rem;
+}
+
+#EditRelation td, #EditRelation th {
+    max-width: 10rem;
+}
+/* #endregion table */

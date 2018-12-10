@@ -1,0 +1,68 @@
+﻿
+
+/* #region Search */
+button.dropdown-item {
+    font-size: 0.8rem;
+}
+/* #endregion Search */
+
+
+/* List */
+#List th, #List td {
+    vertical-align: middle;
+    min-width: 3rem;
+    max-width: 13rem;
+    font-size: .9rem;
+}
+
+
+/* #region Edit modal */
+#CreateSelect button {
+    padding: 3px 6px 3px 6px;
+    float: right;
+    margin-top: 0.15rem;
+}
+#CreateSelect dt {
+    display: inline-block;
+}
+#CreateSelect input {
+    font-weight: normal;
+    width: 85%;
+    display: inline;
+}
+
+#EditSelect button {
+    padding: 2px 6px 2px 6px;
+    float: right;
+    margin-top: 0.15rem;
+    border-radius: 1rem;
+}
+#EditSelect input {
+    font-weight:normal;
+    width:85%;
+    display:inline;
+}
+/* #endregion Edit modal */
+
+
+/* #region form */
+.select {
+    background-color: lightgray;
+    border-radius: 5px;
+}
+
+select.form-control {
+    font-size: 0.8rem;
+}
+/* #endregion form */
+
+
+/* #region table */
+table.table th, table.table td {
+    padding: 0.5rem;
+}
+
+table.table tbody span {
+    font-size: 0.8rem;
+}
+/* #endregion table */

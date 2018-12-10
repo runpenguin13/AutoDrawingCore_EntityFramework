@@ -1,0 +1,35 @@
+﻿/* #region Common */
+
+.card-header > span {
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+input[type="text"], select {
+    height: 33px !important;
+}
+
+div[data-toggle="collapse"] {
+    cursor: pointer;
+}
+/* #endregion Common */
+
+
+/* #region Table */
+.table td, .table th {
+    vertical-align: middle;
+    padding: 0.5rem;
+    font-size: .8rem;
+}
+input[type="number"] {
+    width: 4rem;
+    height: 1.8rem;
+}
+.table button {
+    padding: 0 8px 2px 8px;
+    border-radius: 0.6rem;
+}
+.table .btn .fa {
+    font-size: 0.5rem;
+}
+/* #endregion Table */

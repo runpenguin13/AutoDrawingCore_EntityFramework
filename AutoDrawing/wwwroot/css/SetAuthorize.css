@@ -1,0 +1,49 @@
+﻿
+
+.btn {
+    border-radius: .5rem;
+}
+
+.btn.font-size-7{
+    font-size: .7rem;
+}
+
+
+.fa-times {
+    opacity: .5;
+}
+
+.fa-times:hover {
+    opacity: 1;
+}
+
+/* popup */
+.popup {
+    z-index: 2;
+    padding: .5rem;
+    margin: .125rem 0 0;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border-radius: .25rem;
+    position: absolute;
+    will-change: transform;
+    transform: translate3d(0px, 33px, 0px);
+    border: 1px solid rgba(0,0,0,.15);
+    max-height: 90vh;
+    display: none;
+}
+
+#RoleDiv .overlay, #UserList .overlay {
+    z-index: 1;
+    left: 0;
+}
+
+#UserList .overlay {
+    opacity: 0;
+}
+
+#RoleDiv .popup {
+    min-width: 15rem;
+}

@@ -1,0 +1,11 @@
+﻿
+
+/* #region table */
+table.table th, table.table td {
+    padding: 0.5rem;
+}
+
+table.table tbody span {
+    font-size: 0.8rem;
+}
+/* #endregion table */

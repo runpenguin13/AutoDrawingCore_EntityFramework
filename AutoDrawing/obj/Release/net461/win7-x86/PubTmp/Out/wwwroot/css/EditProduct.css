@@ -1,0 +1,83 @@
+﻿
+
+.input-group-text {
+    min-width: 7rem;
+}
+
+#VariantGroupList {
+    overflow-y: scroll;
+    height: 47rem;
+}
+
+/* #region Table */
+table.table td, table.table th {
+    vertical-align: middle;
+    padding: 0.5rem;
+    max-width: 10rem;
+}
+
+tbody td, button.dropdown-toggle, div.dropdown-menu {
+    font-size: 0.8rem;
+}
+
+tbody button {
+    padding: 1px 8px 1px 8px;
+    border-radius: 0.9rem;
+}
+
+button.btn .fa {
+    font-size: 0.5rem;
+}
+/* #endregion Table */
+
+
+/* component list */
+#ComponentList input {
+    margin-right: 1rem;
+}
+#ComponentList > .card > .card-header {
+    font-size: .9rem;
+}
+
+.default {
+    background-color: darkseagreen;
+    border-radius: 9px;
+    padding: 3px 7px;
+    font-size: 12px;
+    font-weight: 700;
+    color: white;
+    line-height: 1;
+}
+
+#TbSearchParts button, #TbAddParts button {
+    padding: 1px 6px 1px 6px;
+    border-radius: 0.9rem;
+}
+
+#TbSearchParts td {
+    padding: 0.2rem;
+}
+
+p {
+    font-size: 0.9rem;
+}
+
+/* add part list */
+#SearchPartList {
+    overflow-y: scroll;
+    height: 20rem;
+}
+#SearchPartList .btn {
+    overflow-x: hidden;
+}
+
+/* drag drop */
+.dragOver {
+    border-top: 2px dashed;
+}
+
+/* New Part */
+#DivNewPart .modal-dialog {
+    margin-top: 20rem;
+    margin-left: 40rem;
+}
