@@ -1,0 +1,293 @@
+﻿@model IEnumerable<AutoDrawing.Models.DrawingDemo.Product>
+@{
+    ViewData["Title"] = "Product";
+}
+
+<!-- Modal [Create] -->
+<div id="DivCreate" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content bg-success">
+            <div class="modal-header text-white">
+                <span>Create</span>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body bg-white">
+                <div class="card-body">
+                    @using (Html.BeginForm("CreateProduct", "Products", FormMethod.Post, new { id = "FormCreate" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+                        <div class="form-group row">
+                            <span class="col-4 col-form-label">Equipment :</span>
+                            <div class="col">
+                                @Html.DropDownList("Equipments", null, htmlAttributes: new { @class = "form-control", id = "Equipment", Name = "EquipmentId" })
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-4 col-form-label">Product : </label>
+                            <div class="col">
+                                <input id="Product" name="Model" type="text" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-4 col-form-label">Description : </label>
+                            <div class="col">
+                                <input id="Desc" name="Title" type="text" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-4 col-form-label">Mass :</label>
+                            <div class="col">
+                                <input id="Mass" type="text" name="Mass" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-4 col-form-label">Completion : </label>
+                            <div class="col">
+                                <select id="Completion" name="Completion" class="form-control">
+                                    <option>GOODS</option>
+                                    <option>PARTS</option>
+                                    <option>PHANTOM</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-4 col-form-label">ComponentIdx : </label>
+                            <div class="col">
+                                @Html.DropDownList("XComponents", null, htmlAttributes: new { @class = "form-control", id = "XComponent", Name = "ComponentIdx" })
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="modal-footer bg-white">
+                <button id="BtnSubmitCreate" type="button" class="btn btn-success m-0">Create</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal [Edit] -->
+<div id="DivEdit" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <div class="modal-content bg-info">
+            <div class="modal-header text-white">
+                <span>Edit</span>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body bg-white">
+                @using (Html.BeginForm("EditProduct", "Products", FormMethod.Post, new { id = "FormEdit" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <input type="hidden" name="Id" id="MainId" />
+
+                    <div class="form-group row">
+                        <label class="col-4 col-form-label">Equipment :</label>
+                        <div class="col">
+                            @Html.DropDownList("Equipments", null, htmlAttributes: new { @class = "form-control", id = "EditEquip", Name = "EquipmentId" })
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-4 col-form-label">Product :</label>
+                        <div class="col">
+                            <input type="hidden" id="ProductId" name="id" />
+                            <input id="EditProduct" type="text" name="Model" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-4 col-form-label">Description :</label>
+                        <div class="col">
+                            <input id="EditDesc" type="text" name="Title" class="col form-control" />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-4 col-form-label">Mass :</label>
+                        <div class="col">
+                            <input id="EditMass" type="text" name="Mass" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-4 col-form-label">Completion :</label>
+                        <div class="col">
+                            <select id="EditCompletion" name="Completion" class="form-control">
+                                <option>GOODS</option>
+                                <option>PARTS</option>
+                                <option>PHANTOM</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <label class="col-4 col-form-label">ComponentIdx :</label>
+                        <div class="col">
+                            @Html.DropDownList("XComponents", null, htmlAttributes: new { @class = "form-control", id = "EditXComponent", Name = "componentIdx" })
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="modal-footer bg-white">
+                <button id="BtnSubmitEdit" type="button" class="btn btn-success m-0">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal [Copy] -->
+<div id="DivCopy" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <div class="modal-content bg-warning">
+            <div class="modal-header text-white">
+                <span>Copy</span>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body bg-white">
+                <p>Are you sure you want to copy this?</p>
+            </div>
+
+            <div class="modal-footer bg-white">
+                <button id="BtnSubmitCopy" type="button" class="btn btn-warning m-0">Copy</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal [Delete] -->
+<div id="DivDelete" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <div class="modal-content bg-danger">
+            <div class="modal-header text-white">
+                <span class="modal-title">Delete</span>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body bg-white">
+                <p>Are you sure you want to delete this?</p>
+            </div>
+
+            <div class="modal-footer bg-white">
+                <button id="BtnSubmitDelete" type="button" class="btn btn-danger m-0">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Body -->
+<div id="ProductListPage" class="container">
+    <div class="card mb-3">
+        <div class="card-body bg-white">
+
+            <!-- Body [Search] -->
+            <div class="bg-white mb-3">
+                <div class="input-group">
+
+                    <div class="input-group-prepend">
+
+                        <button class="btn info-color text-white dropdown-toggle m-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-align-justify"></i>
+                            <span>Category</span>
+                        </button>
+
+                        <input type="hidden" id="Category" name="Category" />
+
+                        <div class="dropdown-menu" id="ulCategory">
+                            <button type="button" class="dropdown-item" value="All">All</button>
+                            <button type="button" class="dropdown-item" value="Parts">Parts</button>
+                            <button type="button" class="dropdown-item" value="Models">Models</button>
+                            @*<button type="button" class="dropdown-item" value="Manuals">Manuals</button>*@
+                        </div>
+                    </div>
+
+                    <input id="SearchWord" name="SearchWord" type="text" class="form-control" placeholder="Search for models..." />
+
+                    <div class="input-group-append">
+                        <button type="button" class="btn info-color text-white" id="Search">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+
+            <table id="TbList" class="table table-hover" style="margin-bottom:0;">
+                <thead>
+                    <tr>
+                        <th>
+                            <span>Completion</span>
+                        </th>
+                        <th>
+                            <span>Equipment</span>
+                        </th>
+                        <th>
+                            <span>Title</span>
+                        </th>
+                        <th>
+                            <span>Model</span>
+                        </th>
+                        <th>
+                            <span>Mass</span>
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+
+
+@section styles{
+    <environment include="Development">
+        <link rel="stylesheet" href="~/css/Product.css" />
+    </environment>
+
+    <environment exclude="Development">
+        <link rel="stylesheet" href="~/css/Product.min.css" />
+    </environment>
+}
+
+@section scripts{
+    <environment include="Development">
+        <script src="~/js/Product.js"></script>
+    </environment>
+
+    <environment exclude="Development">
+        <script src="~/js/Product.min.js"></script>
+    </environment>
+}

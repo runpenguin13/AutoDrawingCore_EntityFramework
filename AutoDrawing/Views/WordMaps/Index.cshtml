@@ -1,0 +1,387 @@
+﻿@model IEnumerable<AutoDrawing.Models.DrawingDemo.WordMap>
+
+@{
+    ViewData["Title"] = "WordMap";
+}
+
+<!-- Create -->
+<div id="DivCreate" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <span>Create</span>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body bg-white">
+                @using (Html.BeginForm("Create", "WordMaps", FormMethod.Post, new { id = "FormCreate" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="row">
+                        <div class="col pr-0">
+
+                            <div class="card card-body mb-3">
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">Equipment :</label>
+                                    <div class="col-sm-8">
+                                        <input id="CreateEquipmentGroup" name="equipmentGroup" type="text" class="form-control" maxlength="50" readonly />
+                                    </div>
+                                </div>
+
+                                <div class="form-group row mb-0">
+                                    <label class="col-sm-4 col-form-label">Product :</label>
+                                    <div class="col-sm-8">
+                                        <select id="CreateProductId" name="productId" class="form-control"></select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card card-body">
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">Parts :</label>
+                                    <div class="col-sm-8">
+                                        <select id="CreateVariantId" class="form-control"></select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col">
+                            <div class="card card-body">
+
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">Type :</label>
+                                    <div class="col-sm-8">
+                                        <select id="CreateComponentGroup" name="componentGroup" class="form-control">
+                                            <option value="COMPONENT">COMPONENT</option>
+                                            <option value="SYSTEM">SYSTEM</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">Mass (t,w) :</label>
+                                    <div class="col-sm-8">
+                                        <input id="CreateMass" name="mass" type="text" class="form-control" maxlength="50" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">Q'ty :</label>
+                                    <div class="col-sm-8">
+                                        <input id="CreateQty" name="quantity" type="text" class="form-control" maxlength="50" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">Ele. Name :</label>
+                                    <div class="col-sm-8">
+                                        <input id="CreateElementName" name="elementName" type="text" class="form-control" maxlength="50" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">Ele. Type :</label>
+                                    <div class="col-sm-8">
+                                        <select id="CreateElementType" name="elementType" class="form-control">
+                                            <option value="DELETE">DELETE</option>
+                                            <option value="UPDATE">UPDATE</option>
+                                            <option value="TABLE">TABLE</option>
+                                            <option value="VISIO">VISIO</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">File :</label>
+                                    <div class="col-sm-8">
+                                        <input id="CreateObject" name="object" type="text" class="form-control" maxlength="50" readonly />
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">Desc :</label>
+                                    <div class="col-sm-8">
+                                        <input id="CreateDesc" name="desc" type="text" class="form-control" maxlength="50" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">Condition :</label>
+                                    <div class="col-sm-8">
+                                        <input id="CreateCondition" name="condition" type="text" class="form-control" maxlength="50" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="modal-footer">
+                <button id="BtnSubmitCreate" type="button" class="btn btn-success m-0">Create</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Delete -->
+<div id="DivDelete" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <span>Delete</span>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <p>Are you sure you want to delete this?</p>
+            </div>
+
+            <div class="modal-footer">
+                <button id="BtnSubmitDelete" type="button" class="btn btn-danger m-0">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Edit -->
+<div id="DivEdit" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-info text-white">
+                <span>Edit</span>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                @using (Html.BeginForm("Edit", "WordMaps", FormMethod.Post, new { id = "FormEdit" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <input id="EditWordMapId" name="Id" type="hidden" class="form-control" maxlength="50" readonly="readonly" />
+
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+
+                                <div class="row">
+                                    <div class="col p-0">
+                                        <div class="card card-body">
+                                            <div class="form-group row">
+                                                <label class="col-sm-4 col-form-label">Equipment :</label>
+                                                <div class="col-sm-8">
+                                                    <input id="EditEquipmentGroup" name="EquipmentGroup" type="text" class="form-control" maxlength="50" readonly />
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row mb-0">
+                                                <label class="col-sm-4 col-form-label">Product :</label>
+                                                <div class="col-sm-8">
+
+                                                    <select id="EditProductId" name="ProductId" class="form-control"></select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-3">
+                                    <div class="col p-0">
+                                        <div class="card card-body">
+                                            <div class="form-group row mb-0">
+                                                <label class="col-sm-4 col-form-label">Parts :</label>
+                                                <div class="col-sm-8">
+                                                    <select id="EditVariantId" name="" class="form-control"></select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="col pr-0">
+                                <div class="card card-body" id="EditWordMapInfo">
+                                    <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label">Type :</label>
+                                        <div class="col-sm-8">
+                                            <select id="EditComponentGroup" name="ComponentGroup" class="form-control">
+                                                <option value="COMPONENT">COMPONENT</option>
+                                                <option value="SYSTEM">SYSTEM</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label">Mass (t,w) :</label>
+                                        <div class="col-sm-8">
+                                            <input id="EditMass" name="Mass" type="text" class="form-control" maxlength="50" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label">Q'ty :</label>
+                                        <div class="col-sm-8">
+                                            <input id="EditQty" name="Quantity" type="text" class="form-control" maxlength="50" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label">Ele. Name :</label>
+                                        <div class="col-sm-8">
+                                            <input id="EditElementName" name="ElementName" type="text" class="form-control" maxlength="50" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label">Ele. Type :</label>
+                                        <div class="col-sm-8">
+                                            <select id="EditElementType" name="ElementType" class="form-control">
+                                                <option value="DELETE">DELETE</option>
+                                                <option value="VISIO">VISIO</option>
+                                                <option value="UPDATE">UPDATE</option>
+                                                <option value="TABLE">TABLE</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label">File :</label>
+                                        <div class="col-sm-8">
+                                            <input id="EditObject" name="Obj" type="text" class="form-control" maxlength="50" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label">Desc :</label>
+                                        <div class="col-sm-8">
+                                            <input id="EditDesc" name="Desc" type="text" class="form-control" maxlength="50" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label">Method :</label>
+                                        <div class="col-sm-8">
+                                            <input id="EditMethod" name="Method" type="text" class="form-control" maxlength="20" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label">Value</label>
+                                        <div class="col-sm-8">
+                                            <input id="EditValue" name="Value" type="text" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="modal-footer">
+                <button id="BtnSubmitEdit" type="button" class="btn btn-success m-0">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Body -->
+<div id="WordMapPage" class="container">
+    <div class="card mb-3">
+        <div class="card-body">
+
+            <!-- Search -->
+            <div id="DivSearch" class="input-group mb-3">
+                <div class="input-group-prepend">
+
+                    <button class="btn info-color text-white dropdown-toggle m-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-align-justify"></i>
+                        <span>Category</span>
+                    </button>
+
+                    <input type="hidden" id="Category" name="Category" />
+
+                    <div class="dropdown-menu" id="CategoryList">
+                        <button type="button" class="dropdown-item" value="All">All</button>
+                        <button type="button" class="dropdown-item" value="Bookmarks">Bookmarks</button>
+                        <button type="button" class="dropdown-item" value="ContentControl">ContentControl</button>
+                        <button type="button" class="dropdown-item" value="Table">Table</button>
+                        <button type="button" class="dropdown-item" value="Visio">Visio</button>
+                    </div>
+                </div>
+
+                <input id="SearchWord" name="filter" type="text" class="form-control" placeholder="Search for WordMap..." />
+
+                <div class="input-group-append">
+                    <button type="button" class="btn info-color text-white" id="Search">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+
+
+            <table id="List" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            <input type="checkbox" id="chkAll" />
+                            <span class="ml-3">Product</span>
+                        </th>
+                        <th>
+                            <span>Parts</span>
+                        </th>
+                        <th>
+                            <span>Element Name</span>
+                        </th>
+                        <th>
+                            <span>Element Type</span>
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+@section styles{
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/toastr.js/toastr.css" />
+        <link rel="stylesheet" href="~/css/WordMap.css" />
+    </environment>
+
+    <environment exclude="Development">
+        <link rel="stylesheet" href="~/lib/toastr.js/toastr.min.css" />
+        <link rel="stylesheet" href="~/css/WordMap.min.css" />
+    </environment>
+}
+
+@section scripts{
+    <script src="~/lib/toastr.js/toastr.min.js"></script>
+
+    <environment include="Development">
+        <script src="~/js/WordMap.js"></script>
+    </environment>
+
+    <environment exclude="Development">
+        <script src="~/js/WordMap.min.js"></script>
+    </environment>
+}

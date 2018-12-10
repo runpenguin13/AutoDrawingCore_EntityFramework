@@ -1,0 +1,490 @@
+﻿@model AutoDrawing.Models.DrawingDemo.DrawingOrder
+@{
+    ViewData["Title"] = ViewData["ThisDepth"];
+}
+
+<div id="DrawingOrderEdit" class="container">
+    <div id="EditOrder" class="">
+
+        <!-- Order -->
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header bg-secondary text-white folder rounded" data-toggle="collapse" data-target="#EditOrderBody" aria-expanded="true">
+                        <span>Order</span>
+
+                        <div class="text-right float-right" style=" display:inline-block;">
+                            <i class="fa fa-caret-up" aria-hidden="true"></i>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="collapse show mt-2" id="EditOrderBody">
+                    <div class="">
+                        <form id="FormEditOrder" method="post">
+                            <input type="hidden" id="ServiceIdx" name="serviceIdx" value="@ViewData["ServiceIdx"]" />
+
+                            <div class="row mb-3">
+                                <div class="col-6">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Order No.</span>
+                                        </div>
+
+                                        <input type="text" id="OrderNo" name="OrderNo" class="form-control" />
+                                    </div>
+
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Shipyard</span>
+                                        </div>
+
+                                        <select id="YardId" name="YardId"></select>
+                                    </div>
+
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Hull No.</span>
+                                        </div>
+
+                                        <input type="text" id="HullCode" name="HullCode" class="form-control" />
+                                    </div>
+
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Type of drawing</span>
+                                        </div>
+
+                                        <select id="ServiceType" name="ServiceType"></select>
+                                    </div>
+
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Ver.</span>
+                                        </div>
+
+                                        <select id="Version" name="Version"></select>
+                                    </div>
+
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Type of Vessel</span>
+                                        </div>
+
+                                        <select id="VesselType" name="VesselType"></select>
+                                    </div>
+
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Class</span>
+                                        </div>
+
+                                        <select id="Class" name="Class"></select>
+                                    </div>
+
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Notation</span>
+                                        </div>
+
+                                        <select id="Notation" name="Notation"></select>
+                                    </div>
+
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Flag</span>
+                                        </div>
+
+                                        <select id="Flag" name="Flag"></select>
+                                    </div>
+                                </div>
+
+                                <div class="col-6">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Request Date</span>
+                                        </div>
+
+                                        <input type="text" id="RequestDate" name="RequestDate" class="form-control" />
+                                    </div>
+
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Person in charge</span>
+                                        </div>
+
+                                        <select id="Contact" name="Contact"></select>
+                                    </div>
+
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Receive</span>
+                                        </div>
+
+                                        <select id="Engineer" name="Engineer"></select>
+                                    </div>
+
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Status</span>
+                                        </div>
+
+                                        <select id="Status" name="Status"></select>
+                                    </div>
+
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Power Source</span>
+                                        </div>
+
+                                        <select id="PowerSource" name="PowerSource"></select>
+                                    </div>
+
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">RMS</span>
+                                        </div>
+
+                                        <select id="RMS" name="RMS"></select>
+                                    </div>
+
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">BAM</span>
+                                        </div>
+
+                                        <select id="BAM" name="BAM"></select>
+                                    </div>
+
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">GMDSS</span>
+                                        </div>
+
+                                        <select id="GMDSS" name="GMDSS"></select>
+                                    </div>
+
+                                    <!-- Upload File -->
+                                    <div class="row">
+                                        <div class="col">
+
+                                            <div class="input-group">
+                                                <div class="custom-file" style="display:none;">
+                                                    <input type="text" class="upload-name" value="Select Drawing Info Sheet" readonly style="width:70%;" />
+                                                    <label for="FindDwgInfo" class="btn btn-primary p-2">Find DwgInfo</label>
+                                                    <input id="FindDwgInfo" name="file" type="file" class="upload-hidden"
+                                                           accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
+                                                </div>
+                                            </div>
+
+                                            <div class="filebox bs3-primary form-group" style="display:none;">
+                                                <input type="text" class="upload-name" value="Select Drawing Info Sheet" readonly style="width:70%;" />
+
+                                                <label for="FindDwgInfo" class="btn btn-primary p-2">Find DwgInfo</label>
+                                                <input id="FindDwgInfo" name="file" type="file" class="upload-hidden"
+                                                       accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="filebox bs3-primary" style="display:none;">
+                                                <input type="text" class="upload-name" value="Select Inspection Data" readonly style="width:70%;" />
+
+                                                <label for="FindID" class="btn btn-primary m-0">Find ID</label>
+                                                <input id="FindID" name="file" type="file" class="upload-hidden" accept=".pdf" multiple />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="btn-group dropleft float-right mt-1" style="display:inline;">
+                                        <button id="OrderFileList" type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">FILE LIST</button>
+                                        <div id="OrderFiles" class="dropdown-menu" aria-labelledby="OrderFileList"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Equipments -->
+        <div class="card mt-3 mb-2">
+
+            <div class="card-header bg-secondary rounded">
+                <span class="text-white">Equipments</span>
+
+
+                <div class="text-right float-right" style="display:inline-block;">
+                    <!-- download -->
+                    <button type="button" id="BtnDownload" class="btn btn-light text-capitalize" data-toggle="modal" data-target="#DownloadFileModal">Download</button>
+
+                    <div class="modal fade" id="DownloadFileModal" tabindex="-1" role="dialog">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <span class="modal-title">Select download file</span>
+
+                                    <div class="col text-right">
+                                        <button type="button" id="DownloadAction" class="btn btn-light">Download</button>
+                                    </div>
+
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+
+                                <div class="modal-body pt-1">
+                                    <table id="DownloadFileList" class="table text-left mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">
+                                                    <input type="checkbox" id="CheckAll" />
+                                                    Name
+                                                </th>
+                                                <th scope="col">Model</th>
+                                                <th scope="col">File</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="float-right mr-5 text-white">
+                    <button type="button" class="btn warning-color cursor-default" style="width:.5rem;"></button>
+                    <span style="font-size:.8rem;" class="cursor-default mr-1">drawing</span>
+
+                    <button type="button" class="btn success-color cursor-default" style="width:.5rem;"></button>
+                    <span style="font-size:.8rem;" class="cursor-default mr-1">completed</span>
+
+                    <button type="button" class="btn info-color cursor-default" style="width:.5rem;"></button>
+                    <span style="font-size:.8rem;" class="cursor-default mr-1">other version</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="DivEquip" class="mb-3">
+            <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-header font-weight-bold">RDIO</div>
+                        <div class="card-body p-2">
+                            <div class="card MergeGroup">
+                                <div class="card-header">
+                                    <span>RDIO1</span>
+                                    <div class="R1"></div>
+                                </div>
+                                <div class="card-body p-2">
+                                    <div class="MFHF EquipmentGroup"></div>
+                                    <div class="NAVTEX EquipmentGroup"></div>
+                                    <div class="SART EquipmentGroup"></div>
+                                    <div class="EPIRB EquipmentGroup"></div>
+                                </div>
+                            </div>
+                            <div class="card MergeGroup">
+                                <div class="card-header">
+                                    <span>RDIO2</span>
+                                    <div class="R2"></div>
+                                </div>
+                                <div class="card-body p-2">
+                                    <div class="VHF EquipmentGroup"></div>
+                                    <div class="TWO-WAYVHF EquipmentGroup"></div>
+                                </div>
+                            </div>
+
+                            <div class="UHF EquipmentGroup"></div>
+                            <div class="WEATHERFAX EquipmentGroup"></div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card-header font-weight-bold">VOY</div>
+                        <div class="card-body p-2">
+                            <div class="VDR EquipmentGroup"></div>
+                            <div class="AIS EquipmentGroup"></div>
+                            <div class="GPS EquipmentGroup"></div>
+                            <div class="BNWAS EquipmentGroup"></div>
+                            <div class="SAT-LOG EquipmentGroup"></div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card-header font-weight-bold">MFD</div>
+                        <div class="card-body p-2">
+                            <div class="BRIDGEINTERFACE EquipmentGroup"></div>
+                            <div class="RADAR EquipmentGroup"></div>
+                            <div class="ECDIS EquipmentGroup"></div>
+                            <div class="CONNINGDISPLAY EquipmentGroup"></div>
+                            <div class="RPS EquipmentGroup"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row mt-3">
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card-header font-weight-bold">BOTS</div>
+                        <div class="card-body p-2">
+                            <div class="ECHOSOUNDER EquipmentGroup"></div>
+                            <div class="DOPPLERSONAR EquipmentGroup"></div>
+                            <div class="DOPPLERLOG EquipmentGroup"></div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col">
+                    <div class="card">
+                        <div class="card-header font-weight-bold">INMR</div>
+                        <div class="card-body p-2">
+                            <div class="INMARSAT-C EquipmentGroup"></div>
+                            <div class="INMARSAT-FB EquipmentGroup"></div>
+                            <div class="SSAS EquipmentGroup"></div>
+                            <div class="LRIT EquipmentGroup"></div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Final Drawing -->
+<div class="modal fade" id="DivFDrawing" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span>Final Drawing</span>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+
+                @using (Html.BeginForm("UploadInspection", "DrawingOrders", FormMethod.Post, new { id = "FormFDrawig", enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <input id="DwgEquipId" type="hidden" class="form-control" readonly />
+
+                    <div class="centerGroup">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Model</span>
+                            </div>
+                            <input id="DwgEquipModel" type="text" class="form-control" readonly />
+                        </div>
+
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">File name</span>
+                            </div>
+                            <input id="DwgEquipFile" type="text" class="form-control" />
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <div class="col">
+                            <div class="card mt-3">
+                                <div class="card-header">
+                                    <span class="card-title">Drawing List</span>
+                                </div>
+
+                                <div id="FDList" class="card-body"></div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <div class="col">
+                            <div class="card mt-3">
+                                <div class="card-header">
+                                    <span class="card-title">Inspection Data</span>
+
+                                    <div style="display:inline-block; text-align:center; float:right;">
+                                        <label for="FindIns" class="btn btn-primary m-0">Upload files</label>
+                                        <input id="FindIns" type="file" class="upload-hidden" accept=".pdf" multiple />
+                                    </div>
+                                </div>
+
+                                <div id="InsList" class="card-body"></div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <div class="col">
+                            <div class="card mt-3">
+                                <div class="card-header">
+                                    <span class="card-text">Manual</span>
+                                </div>
+
+                                <div id="ManList" class="card-body"></div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="modal-footer">
+                <button id="BtnCreateFD" type="button" class="btn success-color text-white">Create FD</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section styles{
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/toastr.js/toastr.css" />
+        <link rel="stylesheet" href="~/css/EditOrder.css" />
+    </environment>
+
+    <environment exclude="Development">
+        <link rel="stylesheet" href="~/lib/toastr.js/toastr.min.css" />
+        <link rel="stylesheet" href="~/css/EditOrder.min.css" />
+    </environment>
+}
+
+@section scripts{
+    <script>
+        var depth = "@ViewData["ThisDepth"]";
+    </script>
+
+    <script src="~/lib/toastr.js/toastr.min.js"></script>
+
+    <environment include="Development">
+        <script src="~/js/EditOrder.js"></script>
+    </environment>
+
+    <environment exclude="Development">
+        <script src="~/js/EditOrder.min.js"></script>
+    </environment>
+}

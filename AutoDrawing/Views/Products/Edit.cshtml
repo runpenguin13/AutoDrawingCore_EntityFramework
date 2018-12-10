@@ -1,0 +1,359 @@
+﻿@model AutoDrawing.Models.DrawingDemo.Product
+@{
+    ViewData["Title"] = "Edit Component";
+}
+
+
+<!-- Group -->
+<div id="DivVariantGroup" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="AddGroup" name="groupName" />
+
+                    <div class="input-group-append">
+                        <button class="btn btn-light" type="button" id="BtnAddGroup">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col" id="VariantGroupList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Part Modal -->
+<div id="DivAddParts" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="input-group">
+                    <input id="SearchPart" name="filter" type="text" class="form-control" placeholder="Search for Parts..." />
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col" id="SearchPartList"></div>
+                    <div class="col" id="SelectParts"></div>
+                </div>
+            </div>
+
+            <div class="modal-footer bg-white">
+                <button type="button" id="BtnNewPart" data-toggle="modal" data-target="#DivNewPart" class="btn btn-light">NEW PART</button>
+                <button id="BtnSubmitAddParts" type="button" class="btn success-color text-white m-0">SAVE</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="DivNewPart" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span>New Part</span>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body bg-white">
+                <div class="form-group row">
+                    <label class="col-4 col-form-label">Product : </label>
+                    <div class="col">
+                        <input id="NewPart" name="Model" type="text" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-4 col-form-label">Description : </label>
+                    <div class="col">
+                        <input id="NewDesc" name="Title" type="text" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-4 col-form-label">Mass :</label>
+                    <div class="col">
+                        <input id="NewMass" type="text" name="Mass" class="form-control" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer bg-white">
+                <button id="SubmitNewPart" type="button" class="btn success-color text-white m-0">SAVE</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Modal -->
+<div id="DivEditPart" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header bg-info text-white">
+                <span class="modal-title">Edit Parts</span>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body bg-white">
+                @using (Html.BeginForm("Edit", "Products", FormMethod.Post, new { id = "FormEditPart" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <input name="Id" type="hidden" id="EditVariantId" />
+                    <input name="ParentId" type="hidden" />
+
+
+                    <div class="form-group row">
+                        <span class="col-4 col-form-label">Default :</span>
+                        <div class="col-md-8">
+                            <input name="ComponentId" type="hidden" id="EditComponentId" />
+                            <input type="text" id="EditDefault" name="Def" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <span class="col-4 col-form-label">Group :</span>
+                        <div class="col-md-8">
+                            <select id="EditGroup" name="VariantGroup"></select>
+                        </div>
+                    </div>
+
+                    <div style="display:none;">
+
+                    </div>
+
+                    <input id="EditPriority" name="Priority" type="hidden" />
+                    <input name="VariantGroup" type="hidden" />
+
+                    <div class="form-group row">
+                        <span class="col-4 col-form-label">Name :</span>
+                        <div class="col-md-8">
+                            <input id="EditName" name="ComponentName" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <span class="col-4 col-form-label">Type :</span>
+                        <div class="col-md-8">
+                            <select id="EditProduct" name="ProductId" class="form-control"></select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <span class="col-4 col-form-label">Q'ty :</span>
+                        <div class="col-md-8">
+                            <input id="EditQty" name="Quantity" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+
+                        <span class="col-4 col-form-label">Unit :</span>
+                        <div class="col-md-8">
+                            <select id="EditUnit" name="Unit" class="form-control">
+                                <option>Count</option>
+                                <option>Meter</option>
+                                <option>Set</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <span class="col-4 col-form-label">Mass :</span>
+                        <div class="col-md-8">
+                            <input id="EditMass" name="Mass" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <span class="col-4 col-form-label">Remark :</span>
+                        <div class="col-md-8">
+                            <input id="EditRemark" name="Remark" class="form-control" />
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="modal-footer bg-white">
+                <button id="BtnSubmitEdit" type="button" class="btn success-color text-white m-0">SAVE</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Body -->
+<div id="EditComponentPage" class="container">
+
+    <div class="card">
+        <div class="card-body bg-white">
+            @using (Html.BeginForm("SaveProduct", "Products", FormMethod.Post, new { id = "FormProduct", style = "width:100%;" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="row">
+                    <div class="col">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">ID</span>
+                            </div>
+
+                            <input class="form-control" type="text" id="ProductId" name="Id" value="@Model.Id" readonly />
+                        </div>
+
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Equipment</span>
+                            </div>
+
+                            @Html.HiddenFor(model => model.EquipmentId)
+                            @Html.EditorFor(model => model.Equipment.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "", @readonly = "readonly" } })
+                            @Html.ValidationMessageFor(model => model.Equipment.Name, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Product</span>
+                            </div>
+
+                            @Html.EditorFor(model => model.Model, new { htmlAttributes = new { @class = "form-control", placeholder = "" } })
+                            @Html.ValidationMessageFor(model => model.Model, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Group</span>
+                            </div>
+
+                            @Html.EditorFor(model => model.Group, new { htmlAttributes = new { @class = "form-control", placeholder = "" } })
+                            @Html.ValidationMessageFor(model => model.Group, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+
+                    <div class="col">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Mass</span>
+                            </div>
+
+                            @Html.EditorFor(model => model.Mass, new { htmlAttributes = new { @class = "form-control", placeholder = "" } })
+                            @Html.ValidationMessageFor(model => model.Mass, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">XComponent</span>
+                            </div>
+
+                            @Html.DropDownList("ComponentIdx")
+                        </div>
+
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">State</span>
+                            </div>
+
+                            @Html.DropDownList("State")
+                        </div>
+                    </div>
+
+
+                    <div class="col-3">
+                        <img src="~/images/242x200.svg" alt="..." />
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+
+    <div class="card mt-3">
+        <div id="DivParts" class="card-header bg-secondary text-white">
+            <span>Components</span>
+
+            <div style="float:right;">
+                <button id="BtnVariantGroup" type="button" class="btn btn-light" data-target="#DivVariantGroup" data-toggle="modal">Group</button>
+
+                <div class="btn-group">
+                    <button id="BtnAddParts" type="button" class="btn success-color text-white" data-toggle="modal" data-target="#DivAddParts">Add Parts</button>
+                    <button id="BtnDeleteParts" type="button" class="btn danger-color text-white">Remove Parts</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body" style="height:45rem; overflow-y:scroll;" id="ComponentList"></div>
+    </div>
+
+
+    <div class="card mt-3 mb-3">
+        <div class="card-header bg-secondary text-white">
+            <span>Manual</span>
+        </div>
+
+        <div class="card-footer bg-white">
+            <table id="ManualList" class="table">
+                <thead>
+                    <tr>
+                        <th>File Name</th>
+                        <th>Code</th>
+                        <th>Date</th>
+                        <th>Edition</th>
+                        <th>Change Date</th>
+                        <th>Change User</th>
+                    </tr>
+                </thead>
+
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+@section styles{
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/toastr.js/toastr.css" />
+        <link rel="stylesheet" href="~/css/EditProduct.css" />
+    </environment>
+
+    <environment exclude="Development">
+        <link rel="stylesheet" href="~/lib/toastr.js/toastr.min.css" />
+        <link rel="stylesheet" href="~/css/EditProduct.min.css" />
+    </environment>
+}
+
+@section scripts{
+    <script src="~/lib/toastr.js/toastr.min.js"></script>
+
+    <environment include="Development">
+        <script src="~/js/EditProduct.js"></script>
+    </environment>
+
+    <environment exclude="Development">
+        <script src="~/js/EditProduct.min.js"></script>
+    </environment>
+}

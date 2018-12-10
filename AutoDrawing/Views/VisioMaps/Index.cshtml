@@ -1,0 +1,528 @@
+﻿@model IEnumerable<AutoDrawing.Models.DrawingDemo.VisioMap>
+
+@{
+    ViewData["Title"] = "VisioMaps";
+}
+
+
+<!-- Create -->
+<div id="DivCreate" class="modal fade" role="dialog">
+    <div class="modal-dialog" style="max-width:70rem;margin:auto;margin-top:4rem;">
+        <div class="modal-content">
+            <div class="modal-header success-color text-white">
+                <span>Create</span>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                @using (Html.BeginForm("Create", "VisioMaps", FormMethod.Post, new { id = "FormCreate" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="card-body p-0">
+                        <div class="row">
+                            <div class="col">
+
+                                <div class="row">
+
+                                    <div class="col pr-0">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Equip.</span>
+                                            </div>
+
+                                            <select id="CreateEquip" name="EquipmentId" class="form-control"></select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col pr-0">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Product</span>
+                                            </div>
+
+                                            <select id="CreatePro" name="ProductId" class="form-control"></select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">File</span>
+                                            </div>
+
+                                            <select id="CreateFile" name="WordMapId" class="form-control"></select>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="card mt-3">
+                                    <div class="card-header green lighten-3">
+                                        <span>Layer</span>
+                                    </div>
+                                    <div class="card-body">
+
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <span>Layer Information</span>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text">Group</span>
+                                                            </div>
+
+                                                            <select id="CreateGroup" name="Group" class="form-control">
+                                                                <option value="INTERFACE">INTERFACE</option>
+                                                                <option value="COMPONENT">COMPONENT</option>
+                                                                <option value="PROPERTY">PROPERTY</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col">
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text">Layer Name</span>
+                                                            </div>
+
+                                                            <input type="text" id="CreateTitle" name="Title" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text">Default</span>
+                                                            </div>
+
+                                                            <select id="CreateDef" name="Default" class="form-control">
+                                                                <option>ENABLE</option>
+                                                                <option>DISABLE</option>
+                                                                <option>MANDATORY</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col">
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text">Control Layer</span>
+                                                            </div>
+
+                                                            <input type="text" id="CreateEnable" name="EnableLayer" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="card mt-3">
+                                            <div class="card-header">
+                                                <span>Relation Layer</span>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col" id="DivRelations">
+                                                        <input type="hidden" name="strRelations" />
+                                                        <table class="table" id="CreateRelation">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>RelationType</th>
+                                                                    <th>Int.Equip.</th>
+                                                                    <th>Int.Pro.</th>
+                                                                    <th>Component</th>
+                                                                    <th>Method</th>
+                                                                    <th>Value</th>
+                                                                    <th>Layer</th>
+                                                                    <th>LayerVal</th>
+                                                                    <th></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody></tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div id="DivShape" class="card mt-3">
+                                    <div class="card-header green lighten-3">
+                                        <span>Shape</span>
+
+                                        <div style="display:inline-block;float:right;">
+                                            <input type="hidden" id="Shapes" name="strShapes" />
+                                            <button type="button" class="btn btn-white btnAllRemoveShape">All clear</button>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col">
+                                                <button type="button" class="btn btn-white btn-Add-Shape" style="width:100%;">
+                                                    <i class="fa fa-plus"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="modal-footer">
+                <button id="BtnSubmitCreate" type="button" class="btn success-color text-white m-0">Create</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Edit -->
+<div id="DivEdit" class="modal fade" role="dialog">
+    <div class="modal-dialog" style="max-width:70rem;margin:auto;margin-top:4rem;">
+        <div class="modal-content">
+
+            <div class="modal-header info-color text-white">
+                <span>Edit</span>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                @using (Html.BeginForm("Edit", "VisioMaps", FormMethod.Post, new { id = "FormEdit" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <input type="hidden" id="EditId" name="Id" />
+                    <input type="hidden" name="strRelations" />
+
+                    <div class="card-body p-0">
+                        <div class="row">
+                            <div class="col">
+
+                                <div class="row">
+                                    <div class="col pr-0">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Equip.</span>
+                                            </div>
+
+                                            <select id="EditEquip" name="EquipmentId" class="form-control"></select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col pr-0">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Product</span>
+                                            </div>
+
+                                            <select id="EditPro" name="ProductId" class="form-control"></select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">File</span>
+                                            </div>
+
+                                            <select id="EditFile" name="WordMapId" class="form-control"></select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card mt-3">
+                                    <div class="card-header blue lighten-4">
+                                        <span>Layer</span>
+                                    </div>
+                                    <div class="card-body">
+
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <span>Layer Information</span>
+                                            </div>
+                                            <div class="card-body">
+
+                                                <div class="row">
+                                                    <div class="col pr-0">
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text">Group</span>
+                                                            </div>
+
+                                                            <select id="EditGroup" name="Group" class="form-control">
+                                                                <option value="INTERFACE">INTERFACE</option>
+                                                                <option value="COMPONENT">COMPONENT</option>
+                                                                <option value="PROPERTY">PROPERTY</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text">Layer Name</span>
+                                                            </div>
+
+                                                            <input type="text" id="EditTitle" name="Title" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col pr-0">
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text">Default</span>
+                                                            </div>
+
+                                                            <select id="EditDef" name="Def" class="form-control">
+                                                                <option>DISABLE</option>
+                                                                <option>ENABLE</option>
+                                                                <option>MANDATORY</option>
+                                                            </select>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="col">
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text">Control Layer</span>
+                                                            </div>
+
+                                                            <input type="text" id="EditEnable" name="EnableLayer" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="card mt-3">
+                                            <div class="card-header">
+                                                <span>Relation Layer</span>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col" id="DivRelations">
+                                                        @*<input type="hidden" name="strRelations" />*@
+                                                        <table class="table mb-0 relations" id="EditRelation">
+                                                            <thead>
+                                                                <tr>
+                                                                    @*<th>RelationType</th>*@
+                                                                    <th>Int.Equip.</th>
+                                                                    <th>Int.Pro.</th>
+                                                                    <th>Component</th>
+                                                                    <th>Method</th>
+                                                                    <th>Value</th>
+                                                                    <th>Layer</th>
+                                                                    <th>LayerVal</th>
+                                                                    <th></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody></tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="Edit_DivShape" class="card mt-3">
+                                    <div class="card-header blue lighten-4">
+                                        <span>Shape</span>
+
+                                        <div style="display:inline-block;float:right;">
+                                            <input type="hidden" id="Shapes" name="strShapes" />
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-white text-capitalize btnAddShape">Add Shape</button>
+                                                <button type="button" class="btn btn-white text-capitalize btnAllRemoveShape">All clear</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <ul class="list-group list-group-flush">
+
+                                        @*<div class="row">
+                                                <div class="col divShapes">
+
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <button type="button" class="btn btn-white btn-Add-Shape" style="width:100%;">
+                                                        <i class="fa fa-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </div>*@
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="modal-footer">
+                <div style="text-align:right;">
+                    <button id="BtnSubmitEdit" type="button" class="btn info-color text-white m-0">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Delete -->
+<div class="modal fade" id="DivDelete" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+
+        <div class="modal-content">
+            <div class="modal-header danger-color text-white">
+                <span>Delete</span>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <p>도면에 Diagram이 존재하는 경우, 함께 삭제 하시겠습니까?</p>
+            </div>
+
+            <div class="modal-footer">
+                <button id="BtnSubmitDelete" type="button" class="btn danger-color text-white m-0">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Copy -->
+<div class="modal fade" id="DivCopy" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+
+        <div class="modal-content">
+            <div class="modal-header warning-color text-white">
+                <span>Copy</span>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <p>Are you sure copy?</p>
+            </div>
+
+            <div class="modal-footer">
+                <button id="BtnSubmitCopy" type="button" class="btn warning-color text-white m-0">Copy</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Body -->
+<div id="VisioMapPage" class="container">
+    <div class="card mb-3">
+        <div class="card-body">
+            <div id="FilterGroup" class="row form-group">
+                <div class="col-4">
+
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Equipment</span>
+                        </div>
+
+                        <select id="FilterEquip" class="form-control"></select>
+                    </div>
+                </div>
+
+                <div class="col-4">
+
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Product</span>
+                        </div>
+
+                        <select id="FilterPro" class="form-control"></select>
+                    </div>
+                </div>
+
+                <div class="col-4">
+
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">File</span>
+                        </div>
+
+                        <select id="FilterFile" class="form-control"></select>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col">
+                    <table id="List" class="table table-hover" style="margin-bottom:0;">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Equipment</th>
+                                <th>Product</th>
+                                <th>File</th>
+                                <th>Component</th>
+                                <th>Title</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        <tbody></tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section styles{
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/toastr.js/toastr.css" />
+        <link rel="stylesheet" href="~/css/VisioMap.css" />
+    </environment>
+
+    <environment exclude="Development">
+        <link rel="stylesheet" href="~/lib/toastr.js/toastr.min.css" />
+        <link rel="stylesheet" href="~/css/VisioMap.min.css" />
+    </environment>
+}
+
+@section scripts{
+    <script src="~/lib/toastr.js/toastr.min.js"></script>
+
+    <environment include="Development">
+        <script src="~/js/VisioMap.js"></script>
+    </environment>
+
+    <environment exclude="Development">
+        <script src="~/js/VisioMap.min.js"></script>
+    </environment>
+}

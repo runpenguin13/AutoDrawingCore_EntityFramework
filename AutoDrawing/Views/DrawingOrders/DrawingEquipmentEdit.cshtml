@@ -1,0 +1,67 @@
+﻿@model AutoDrawing.Models.DrawingDemo.DrawingEquipment
+@{
+    ViewData["Title"] = ViewData["ThisDepth"];
+}
+
+<div id="DrawingEquipmentEdit" class="container">
+
+    <!-- Components -->
+    <input type="hidden" id="Id" value="@Model.Id" />
+
+    <div class="card mb-3">
+        <div id="DivEquip" class="collapse show">
+            <div class="card-body">
+                <table id="TbComponents" class="table table-hover m-0">
+                    <thead>
+                        <tr>
+                            <th>
+                                <input type="checkbox" id="AllCheck" hidden />
+                                <span style="margin-left:2rem;">Name</span>
+                            </th>
+                            <th>Type</th>
+                            <th style="width:8rem;">Q'ty</th>
+                            <th style="width:8rem;">Mass</th>
+                            <th>Remark</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section styles{
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/toastr.js/toastr.css" />
+        <link rel="stylesheet" href="~/css/EditComponent.css" />
+    </environment>
+
+    <environment exclude="Development">
+        <link rel="stylesheet" href="~/lib/toastr.js/toastr.min.css" />
+        <link rel="stylesheet" href="~/css/EditComponent.min.css" />
+    </environment>
+}
+
+@section scripts{
+    <script>
+        var depth = "@ViewData["Depth"]";
+        var orderId = @Model.DrawingOrderId;
+        var dwgEquipId = @Model.Id;
+        var wordmapId = "@ViewData["WordMapId"]";
+        var model = "@Model.Product.Model";
+    </script>
+
+    <script src="~/lib/toastr.js/toastr.min.js"></script>
+
+    <environment include="Development">
+        <script src="~/js/EditComponent.js"></script>
+    </environment>
+
+    <environment exclude="Development">
+        <script src="~/js/EditComponent.min.js"></script>
+    </environment>
+}

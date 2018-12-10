@@ -1,0 +1,100 @@
+﻿@model AutoDrawing.Models.DrawingDemo.DrawingEquipment
+@{
+    ViewData["Title"] = ViewData["Depth"] + "Diagram";
+}
+
+<div id="ShapePopup" class="card">
+    <div class="card-header"></div>
+
+    <div class="card-body pt-2 pb-2"></div>
+</div>
+<div id="ShapeOverlay" class="shapeOverlay"></div>
+
+
+
+<div id="DiagramPage">
+
+    <!-- Left -->
+    <div id="diagram-content" class="appear">
+        <object id="diagram-element" data="@ViewData["SvgUrl"]" type="image/svg+xml"></object>
+    </div>
+
+
+    <!-- Right -->
+    <div id="panel-layers" class="databar">
+        <div class="row">
+            <div class="col">
+                <div id="shape-components" class="card">
+                    <div class="card-header bg-secondary text-white" data-toggle="collapse" data-target="#collapseComponents" style="cursor:pointer;">
+                        <span>Components</span>
+                    </div>
+                    <div id="collapseComponents" class="collapse">
+                        <div id="panel-components" class="card-body">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="shape-interfaces" class="card mt-3">
+                    <div class="card-header bg-secondary text-white" data-toggle="collapse" data-target="#collapseInterfaces" style="cursor:pointer;">
+                        <span>Interfaces</span>
+                    </div>
+
+                    <div id="collapseInterfaces" class="collapse">
+                        <div id="panel-interfaces" class="card-body">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="shape-properties" class="card mt-3">
+                    <div class="card-header bg-secondary text-white" data-toggle="collapse" data-target="#collapseProperties" style="cursor:pointer;">
+                        <span>Properties</span>
+                    </div>
+
+                    <div id="collapseProperties" class="collapse">
+                        <div id="panel-properties" class="card-body">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section styles{
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/toastr.js/toastr.css" />
+        <link rel="stylesheet" href="~/css/DiagramConfig.css" />
+    </environment>
+
+    <environment exclude="Development">
+        <link rel="stylesheet" href="~/lib/toastr.js/toastr.min.css" />
+        <link rel="stylesheet" href="~/css/DiagramConfig.min.css" />
+    </environment>
+}
+
+@section scripts{
+    <script>
+        var depth = "@ViewData["Depth"]";
+        var orderId = @ViewData["OrderId"];
+        var dwgEquipId = @ViewData["DrawingId"];
+        var wordmapId = "@ViewData["WordmapId"]";
+        var model = "@Model.Product.Model";
+
+        var url = '@Url.Action("DiagramConfigImport", "DrawingOrders")' + '?dwgEquipId=' + dwgEquipId + '&wdmapId=' + wordmapId;
+
+        @*var items = @Html.Raw(Json.Encode(ViewBag.Items));*@
+        var items = @Html.Raw(ViewData["Items"]);
+    </script>
+
+    <script src="~/lib/toastr.js/toastr.min.js"></script>
+    <script src="~/js/vp-script.js"></script>
+
+    <environment include="Development">
+        <script src="~/js/DiagramConfig.js"></script>
+    </environment>
+
+    <environment exclude="Development">
+        <script src="~/js/DiagramConfig.min.js"></script>
+    </environment>
+}

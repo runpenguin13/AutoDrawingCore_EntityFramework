@@ -9448,11 +9448,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\이정화\\Desktop\\2018-12-10\\AutoDrawing\\AutoDrawing\\AutoDrawing.csproj",
+      "projectUniqueName": "C:\\Users\\이정화\\Desktop\\AutoDrawingCore_EntityFramework\\AutoDrawing\\AutoDrawing.csproj",
       "projectName": "AutoDrawing",
-      "projectPath": "C:\\Users\\이정화\\Desktop\\2018-12-10\\AutoDrawing\\AutoDrawing\\AutoDrawing.csproj",
+      "projectPath": "C:\\Users\\이정화\\Desktop\\AutoDrawingCore_EntityFramework\\AutoDrawing\\AutoDrawing.csproj",
       "packagesPath": "C:\\Users\\이정화\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\이정화\\Desktop\\2018-12-10\\AutoDrawing\\AutoDrawing\\obj\\",
+      "outputPath": "C:\\Users\\이정화\\Desktop\\AutoDrawingCore_EntityFramework\\AutoDrawing\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

@@ -1,0 +1,172 @@
+﻿@model IEnumerable<AutoDrawing.Models.DrawingDemo.Entity>
+@{
+    ViewData["Title"] = "Entity";
+}
+
+<!-- Create Modal -->
+<div id="DivCreate" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <span>Create</span>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                @using (Html.BeginForm("Create", "Entity", FormMethod.Post, new { id = "FormCreate" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <label class="col-4 col-form-label">Name : </label>
+                            <div class="col">
+                                <input name="name" type="text" class="form-control" maxlength="50" placeholder="ex) STX OFFSHORE & SHIPBUILDING COL.,LTD." />
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-4 col-form-label">Code : </label>
+                            <div class="col">
+                                <input name="code" type="text" class="form-control" maxlength="50" placeholder="ex) STX" />
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-4 col-form-label">Company :</label>
+                            <div class="col">
+                                @Html.DropDownList("CompanyIdx")
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="modal-footer">
+                <button id="BtnSubmitCreate" type="button" class="btn btn-success m-0">Create</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Edit Modal -->
+<div id="DivEdit" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-info text-white">
+                <span>Edit</span>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                @using (Html.BeginForm("Edit", "Equipments", FormMethod.Post, new { id = "FormEdit" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="card-body">
+
+                        <div class="form-group row">
+                            <label class="col-4 col-form-label">Name :</label>
+                            <div class="col">
+                                <input name="id" type="hidden" />
+                                <input name="name" type="text" class="form-control" maxlength="50" />
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-4 col-form-label">Code :</label>
+                            <div class="col">
+
+                                <input name="code" type="text" class="form-control" maxlength="50" />
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-0">
+                            <label class="col-4 col-form-label">Company :</label>
+                            <div class="col">
+                                @Html.DropDownList("CompanyIdx")
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="modal-footer">
+                <button id="BtnSubmitEdit" type="button" class="btn btn-success m-0">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Delete Modal -->
+<div id="DivDelete" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <span>Delete</span>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <span>Are you sure you want to delete this?</span>
+            </div>
+
+            <div class="modal-footer">
+                <button id="BtnSubmitDelete" type="button" class="btn btn-danger m-0">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Body -->
+<div id="EntityPage" class="container">
+    <div class="card mb-3">
+        <div class="card-body">
+            <table id="EntityTable" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Company</th>
+                        <th>Code</th>
+                        <th>XCompany</th>
+                    </tr>
+                </thead>
+
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+
+@section styles{
+    <environment include="Development">
+        <link rel="stylesheet" href="~/css/Entity.css" />
+    </environment>
+
+    <environment exclude="Development">
+        <link rel="stylesheet" href="~/css/Entity.min.css" />
+    </environment>
+}
+
+@section scripts{
+    <environment include="Development">
+        <script src="~/js/Entity.js"></script>
+    </environment>
+
+    <environment exclude="Development">
+        <script src="~/js/Entity.min.js"></script>
+    </environment>
+}
