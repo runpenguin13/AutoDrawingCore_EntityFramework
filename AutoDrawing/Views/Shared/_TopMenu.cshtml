@@ -1,0 +1,271 @@
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@inject RoleManager<ApplicationRole> RoleManager
+
+
+<div id="TopNav" class="stylish-color-dark topMenu">
+
+    <div id="MenuBar" class="row align-items-center">
+        <button type="button" id="BtnMenu" class="btn btn-elegant text-white ml-4">MENU</button>
+        <div class="col-4">
+            <nav aria-label="breadcrumb" role="navigation">
+                <ol class="breadcrumb m-2"></ol>
+            </nav>
+        </div>
+
+        <div class="col" style="text-align:right;">
+            <div class="btn-group mr-2">
+
+                <div class="input-group">
+                    <input type="text" id="Search" class="form-control" placeholder="Hull No. / Order No." />
+                    <div class="input-group-append">
+                        <button type="button" class="btn btn-light" id="SearchButton">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="SearchBox" class="under">
+                    <div class="card-header rounded" data-toggle="collapse" data-target="#SearchOption">Detail options</div>
+
+                    <div id="SearchOption" class="p-2 searchOption collapse show">
+                        <div class="row">
+                            <div class="col-4 checkOptions">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="CheckDrawingState" name="CheckDrawingState" />
+                                    <label class="form-check-label disabled" for="CheckDrawingState">Drawing State</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <select id="DrawingState" name="DrawingState" class="form-control" disabled></select>
+                            </div>
+                        </div>
+
+                        <div class="row mt-2">
+                            <div class="col-4 checkOptions">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="CheckDrawingType" name="CheckDrawingType" />
+                                    <label class="form-check-label disabled" for="CheckDrawingType">Drawing Type</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <select id="DrawingType" name="DrawingType" class="form-control" disabled>
+                                    <option value="90">AD</option>
+                                    <option value="95">WD</option>
+                                    <option value="99">FD</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mt-2">
+                            <div class="col-4 checkOptions">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="CheckRequestDate" name="CheckRequestDate" />
+                                    <label class="form-check-label disabled" for="CheckRequestDate">Request Date</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-inline">
+                                    <div class="input-group">
+                                        <input class="form-control" type="date" id="StartRequestDate" name="StartRequestDate" value="@ViewBag.nowDate" disabled />
+                                    </div>
+
+                                    <span class="ml-2 mr-2">~</span>
+
+                                    <div class="input-group">
+                                        <input class="form-control" type="date" id="FinishRequestDate" name="FinishRequestDate" value="@ViewBag.nowDate" disabled />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-2">
+                            <div class="col-4 checkOptions">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="CheckShipyard" name="CheckShipyard" />
+                                    <label class="form-check-label disabled" for="CheckShipyard">Shipyard</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <select id="Shipyard" name="Shipyard" class="form-control" disabled></select>
+                            </div>
+                        </div>
+
+                        <div class="row mt-2">
+                            <div class="col-4 checkOptions">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="CheckClass" name="CheckClass" />
+                                    <label class="form-check-label disabled" for="CheckClass">Class</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <select id="Class" name="Class" class="form-control" disabled></select>
+                            </div>
+                        </div>
+
+                        <div class="row mt-2">
+                            <div class="col-4 checkOptions">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="CheckNotation" name="CheckNotation" />
+                                    <label class="form-check-label disabled" for="CheckNotation">Notation</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <select id="Notation" name="Notation" class="form-control" disabled></select>
+                            </div>
+                        </div>
+
+                        <div class="row mt-2">
+                            <div class="col-4 checkOptions">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="CheckFlag" name="CheckFlag" />
+                                    <label class="form-check-label disabled" for="CheckFlag">Flag</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <select id="Flag" name="Flag" class="form-control" disabled></select>
+                            </div>
+                        </div>
+
+                        <div class="row mt-2">
+                            <div class="col-4 checkOptions">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="RMS" name="RMS" />
+                                    <label class="form-check-label disabled" for="RMS">RMS</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <select id="RMS" name="RMS" class="form-control" disabled>
+                                    <option value="True">TRUE</option>
+                                    <option value="False">FALSE</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mt-2">
+                            <div class="col-4 checkOptions">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="BAM" name="BAM" />
+                                    <label class="form-check-label disabled" for="BAM">BAM</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <select id="BAM" name="BAM" class="form-control" disabled>
+                                    <option value="True">TRUE</option>
+                                    <option value="False">FALSE</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mt-2">
+                            <div class="col-4 checkOptions">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="GMDSS" name="GMDSS" />
+                                    <label class="form-check-label disabled" for="GMDSS">GMDSS</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <select id="GMDSS" name="GMDSS" class="form-control" disabled>
+                                    <option>JRC</option>
+                                    <option>MRC</option>
+                                    <option>Seperate</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="card-header rounded" data-toggle="collapse" data-target="#SearchResult">Result</div>
+                    <div id="SearchResult" class="p-2"></div>
+                </div>
+                <div class="overlay"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="Menu" class="sideMenu stylish-color-dark">
+        <button type="button" id="dismiss" class="close text-white" aria-label="닫기">
+            <span aria-hidden="true">&times;</span>
+        </button>
+
+        <div class="sidebar-header">
+            <a href="/DrawingOrders/List" title="Home page">
+                <img src="~/images/myDrawing_logo.png" alt="MyDrawing" />
+            </a>
+        </div>
+
+        <ul class="list-unstyled components">
+
+            @if (SignInManager.IsSignedIn(User))
+            {
+                @if (User.Identity.IsAuthenticated)
+                {
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li class="active">
+                            <a href="#MasterRecord" data-toggle="collapse" aria-expanded="false">
+                                Master Record<i class="fa fa-chevron-down"></i>
+                            </a>
+
+                            <ul class="list-unstyled collapse in show" id="MasterRecord" aria-expanded="true">
+                                <li><a href="/Products/Index">Product</a></li>
+                                <li><a href="/Equipments/Index">Equipment</a></li>
+                                <li><a href="/Entities/Index">Company</a></li>
+                                <li><a href="/WordMaps/Index">Word</a></li>
+                                <li><a href="/VisioMaps/Index">Visio</a></li>
+                            </ul>
+                        </li>
+
+                        <li><a href="/Manage/SetAuthorize">권한 설정</a></li>
+                    }
+                }
+            }
+
+            <li><a href="https://docs.google.com/spreadsheets/d/1vRXKtRuhRLFOJvUUfbXmZ0JQ2cbyXRJXcEpM4oq_aMk/edit#gid=1038521660" target="_blank">Bug Report</a></li>
+            <li><a href="https://docs.google.com/spreadsheets/d/1r5ItH5XrljE0EXkI4aodwJnNv2vlJIp08ZOib27YCMg/edit#gid=1096808103" target="_blank">도면제작 분기 보고서</a></li>
+        </ul>
+
+        <ul class="list-unstyled CTAs">
+            <li>@await Html.PartialAsync("_LoginPartial")</li>
+        </ul>
+
+        <div class="row">
+            <div class="col" id="DivVersion">
+                <span style="font-size:.8rem;">4.17</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay"></div>
+</div>
+
+@*@if (SignInManager.IsSignedIn(User))
+{
+    <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm" class="navbar-right">
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
+            </li>
+            <li>
+                <button type="submit" class="btn btn-link navbar-btn navbar-link">Logout</button>
+            </li>
+
+            @if (User.Identity.IsAuthenticated)
+            {
+                @if (User.IsInRole("Admin"))
+                {
+                    <li>TEST</li>
+                }
+            }
+        </ul>
+    </form>
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li><a asp-area="Identity" asp-page="/Account/Register">Register</a></li>
+        <li><a asp-area="Identity" asp-page="/Account/Login">Login</a></li>
+    </ul>
+}*@
